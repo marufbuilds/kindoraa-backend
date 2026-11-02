@@ -14,9 +14,9 @@ export function createAuth(db) {
     secret: process.env.BETTER_AUTH_SECRET,
 
     trustedOrigins: [
-      process.env.FRONTEND_URL || "http://localhost:3000",
-    ],
-
+  "http://localhost:3000",
+  "https://kindoraa-frontend.vercel.app",
+],
     emailAndPassword: {
       enabled: true,
       minPasswordLength: 8,

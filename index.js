@@ -1,9 +1,4 @@
-<<<<<<< HEAD
  
-=======
- import verifyToken from "./middleware/verifyToken.js";
-// import eventPost from "./routes/post/eventPost.js";
->>>>>>> 5cf95f3af175ce2f461ee80c5a36f71cdc29fda0
 import express from "express";
 import { MongoClient } from "mongodb";
 import cors from "cors";
@@ -13,12 +8,21 @@ import { toNodeHandler } from "better-auth/node";
 import eventPost from "./routes/post/eventPost.js";
 import { createAuth } from "./confiq/auth.js";
 
-dotenv.config();
+// Load backend environment variables
+dotenv.config({ path: ".env.local" });
 
 const app = express();
 const port = process.env.PORT || 5000;
 
-<<<<<<< HEAD
+// Check required environment variables
+if (!process.env.MONGODB_URI) {
+  throw new Error("MONGODB_URI is missing from .env.local");
+}
+
+if (!process.env.BETTER_AUTH_SECRET) {
+  throw new Error("BETTER_AUTH_SECRET is missing from .env.local");
+}
+
 // Allowed frontend origins
 const allowedOrigins = [
   "http://localhost:3000",
@@ -30,7 +34,6 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests without an Origin header
       if (!origin || allowedOrigins.includes(origin)) {
         return callback(null, true);
       }
@@ -49,8 +52,6 @@ app.options(/.*/, cors());
 app.use(express.json());
 
 // MongoDB connection
-=======
->>>>>>> 5cf95f3af175ce2f461ee80c5a36f71cdc29fda0
 const client = new MongoClient(process.env.MONGODB_URI);
 
 async function run() {
@@ -59,26 +60,14 @@ async function run() {
     await client.connect();
 
     const db = client.db("kindoraDB");
-
-    // Make database available to Express routes
     app.locals.db = db;
 
     console.log("MongoDB connected successfully");
 
-<<<<<<< HEAD
-=======
-    // Configure CORS
-    app.use(
-      cors({
-        origin: process.env.FRONTEND_URL || "http://localhost:3000",
-        credentials: true,
-      })
-    );
+    // Check the Better Auth configuration
+    console.log("Better Auth URL:", process.env.BETTER_AUTH_URL);
+    console.log("Frontend URL:", process.env.FRONTEND_URL);
 
-    // Parse JSON requests
-    app.use(express.json());
-
->>>>>>> 5cf95f3af175ce2f461ee80c5a36f71cdc29fda0
     // Initialize Better Auth
     const auth = createAuth(db);
 
@@ -90,17 +79,10 @@ async function run() {
 
     // API home route
     app.get("/", (req, res) => {
-<<<<<<< HEAD
       res.status(200).send("Welcome to Kindora API");
     });
 
-    // Start local development server
-=======
-      res.send("Welcome to Kindora API");
-    });
-
     // Start server
->>>>>>> 5cf95f3af175ce2f461ee80c5a36f71cdc29fda0
     app.listen(port, () => {
       console.log(`Kindora server running on port ${port}`);
     });

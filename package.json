@@ -1,4 +1,3 @@
-<<<<<<< HEAD
  
 {
   "name": "kindora-backend",
@@ -8,15 +7,6 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js"
-=======
-{
-  "name": "kindora-backend",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
->>>>>>> 5cf95f3af175ce2f461ee80c5a36f71cdc29fda0
   },
   "keywords": [],
   "type": "module",
