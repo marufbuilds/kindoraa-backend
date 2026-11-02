@@ -14,9 +14,20 @@ export function createAuth(db) {
     secret: process.env.BETTER_AUTH_SECRET,
 
     trustedOrigins: [
-  "http://localhost:3000",
-  "https://kindoraa-frontend.vercel.app",
-],
+      "http://localhost:3000",
+      "https://kindoraa-frontend.vercel.app",
+    ],
+
+    // Cookie settings for local and production
+    advanced: {
+      defaultCookieAttributes: {
+        sameSite:
+          process.env.NODE_ENV === "production" ? "none" : "lax",
+        secure: process.env.NODE_ENV === "production",
+        httpOnly: true,
+      },
+    },
+
     emailAndPassword: {
       enabled: true,
       minPasswordLength: 8,
